@@ -10,6 +10,7 @@
     c. repository
     d. domain
     e. dto
+    f. cmd
 ```
 
 | 分層名稱   | 用途                                                  |
@@ -19,6 +20,7 @@
 | repository | 主要與資料庫做互動                                    |
 | domain     | 每個服務的共用資訊,提供給各層取用                     |
 | dto        | 服務的 input output 結構定義                          |
+| cmd        | 服務的入口,如有副程式可在這邊新增入口                 |
 
 #### 使用套件
 
@@ -32,7 +34,7 @@
 
 ```
 服務啟動採用docker-compose,內含
-    a. loadbalancer (簡易版,單純模擬multiple server的情況)
+    a. dispatcher (簡易版,單純模擬multiple server的情況)
     b. server1,server2 ( 服務內容皆相同 )
     c. redie,redis-adminer
 ```
