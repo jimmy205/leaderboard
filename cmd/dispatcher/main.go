@@ -8,25 +8,25 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// easy loadbalancer for testing multiple leaderboard server
+// easy dispatcher for testing multiple leaderboard server
 func main() {
 	server := gin.Default()
 
-	loadbalancer := &loadbalancer{
+	dispatcher := &dispatcher{
 		servers: []string{"http://server1", "http://server2"},
 	}
 
-	server.POST("/api/score", loadbalancer.proxy)
-	server.GET("/api/leaderboard", loadbalancer.proxy)
+	server.POST("/api/v1/score", dispatcher.proxy)
+	server.GET("/api/v1/leaderboard", dispatcher.proxy)
 
 	server.Run(":8000")
 }
 
-type loadbalancer struct {
+type dispatcher struct {
 	servers []string
 }
 
-func (load loadbalancer) proxy(ctx *gin.Context) {
+func (load dispatcher) proxy(ctx *gin.Context) {
 	p, err := url.Parse(load.servers[rand.Intn(len(load.servers))])
 	if err != nil {
 		return

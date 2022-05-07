@@ -3,11 +3,11 @@ WORKDIR /src
 
 RUN apk add --no-cache
 COPY . .
-RUN go build -o loadbalancer ./cmd/loadbalancer/*.go
+RUN go build -o dispatcher ./cmd/dispatcher/*.go
 RUN go build -o server ./cmd/*.go
 
 FROM build-env
 WORKDIR /app
-COPY --from=build-env /src/loadbalancer loadbalancer
+COPY --from=build-env /src/dispatcher dispatcher
 COPY --from=build-env /src/server server
 # ENTRYPOINT ./loadbalancer
