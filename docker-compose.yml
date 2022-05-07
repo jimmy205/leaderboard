@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  loadbalancer:
+    build: .
+    image: leaderboard
+    command: ./loadbalancer
+    ports:
+      - 8000:8000
+
+  server1:
+    image: leaderboard
+    command:
+      - ./server
+
+  server2:
+    image: leaderboard
+    command:
+      - ./server
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  redis-admin:
+    image: erikdubbelboer/phpredisadmin
+    restart: always
+    environment:
+      - REDIS_1_PROT=6379
+      - REDIS_1_HOST=redis
+    ports:
+      - 8080:80
+
+# volumes:
