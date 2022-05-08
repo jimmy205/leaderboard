@@ -25,8 +25,11 @@
 #### 使用套件
 
 ```
-1. 排序部份使用redis的zset自動排序
-2. 測試部份使用 miniredis的mock redis做測試以防止操作到真正的資料
+1. DB使用redis,主要原因如下
+    a. 資料需定時刪除，redis有提供TTL功能
+    b. 資料需排序，redis的zset可提供排序功能
+2. unit test: mini-redis
+    a. 為了防止單元測試時影響到正式資料，使用mock redis
 3. server使用gin
 ```
 
@@ -45,7 +48,7 @@
     查看: docker-compose ps
     log  : docker-compose logs -f $container_name
 
-* 確認 port: 6837,8000 尚未被使用
+* 確認 port: 6379,8000 尚未被使用
 ```
 
 #### 測試方式
